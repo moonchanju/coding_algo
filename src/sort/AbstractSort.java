@@ -7,7 +7,7 @@ public abstract class AbstractSort {
     //Comparable (타입) -> 자바 내장함수로, 객체끼리의 비교를 가능하게 해줌, 현재는 배열 형태의 매개변수로 줌
     public static boolean less(Comparable v, Comparable w) {
         return v.compareTo(w) < 0;
-        // v가 w 보다 작으면 음수, 같으면 0 크면 양수를 반환하ㅁ는데
+        // v가 w 보다 작으면 음수, 같으면 0 크면 양수를 반환하는데
         // < 0 으로의 비교 연산을 통하면 -> 불린 값이 반환됨.
     }
 

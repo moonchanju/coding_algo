@@ -5,7 +5,8 @@ public class SelectionSort extends AbstractSort {
     public static void sort(Comparable[] a) {
         int n = a.length;
         for (int i = 0; i < n-1; i++) {
-            int min =i; //선택할 후보를 min으로 저장
+            int min =i; //필요한 이유 -> 밑의 for 문에서 적절한 삽입 위치를 다 찾은 후 한번만 교환
+            //하기 위해서는  min 이라는 값을 지정해서 써줘야함.
             for (int j = i + 1; j < n; j++) {
                 if (less(a[j], a[min])) {
                     //j가 더 작으면
