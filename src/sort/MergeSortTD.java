@@ -1,4 +1,4 @@
-//병합정렬 코드
+//병합정렬 코드개
 package sort;
 
 public class MergeSortTD extends AbstractSort {
@@ -44,6 +44,7 @@ public class MergeSortTD extends AbstractSort {
         int mid = low+ (high - low) / 2; // (중요 코드) 현재 부분을 두 부분으로 나눌때 중간 지점이 될 인덱스
         sort(a, aux, low, mid); //좌측 배열 재귀
         sort(a, aux, mid + 1, high); //우측 배열 재귀
+        if(less(a[mid],a[mid+1])) return; // 이미 정렬이 되어있을 경우 병합할 필요 x -> 성능 개선
         merge(a, aux, low, mid, high); //재귀가 끝나는 시점에서 병합
     }
 
