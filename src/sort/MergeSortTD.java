@@ -1,4 +1,4 @@
-//병합정렬 코드개
+//병합정렬 코드 (탑 다운)
 package sort;
 
 public class MergeSortTD extends AbstractSort {
