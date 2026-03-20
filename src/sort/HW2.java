@@ -36,7 +36,7 @@ public class HW2 {
     private static void printList(ListNode head) {
         ListNode cur = head;
         while (cur != null) {
-            System.out.print(cur.val);
+            System.out.print(cur.val+" ");
             cur = cur.next;
         }
     }
@@ -73,6 +73,7 @@ class Solution2 {
             cur = newNode;
         }
         return dummy.next;
+        //dummy의 다음 포인터를 주어 값만 넘김
     }
 
 }
