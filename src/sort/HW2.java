@@ -53,14 +53,24 @@ class Solution2 {
             ListNode prev = dummy;
             // dummy 노드를 가리키는 포인터
             // 연결리스트는 삽입대상 노드의 이전 노드(prev) 통해서만 삽입, 삭제가 가능하기에
+
             while (prev.next != null && prev.next.val < cur.val)
             // 삽입될 자리의 노드를 찾으려면 이전노드의 다음노드를 대상으로 검사를 해야함.
             //해당 자리가 삽입이 될 자리의 노드. prev.next 가 cur의 후보가 됨.
             {
                 prev = prev.next; // prev의 포인터를 옮겨주며 자리를 찾아감.
             }
+
+            ListNode newNode = cur.next;
+            //기존 노드의 위치를 저장해줘야함
+            //왜 ? 순서를 바꿔가면서 하는 정렬 이기에 기존 처리해야할 노드의 다음위치를 기억해둔 후
+
+            //여기서 일단 정렬의 위치를 바꿔주고
             cur.next = prev.next ; //새로운 연결 먼저
             prev.next = cur; //기존 연결 수정
+
+            //여기서 기존 처리해야할 노드대로 다시 이동해서 while 문에 삽입.
+            cur = newNode;
         }
         return dummy.next;
     }
