@@ -44,13 +44,25 @@ public class HW2 {
 
 class Solution2 {
     public ListNode insertionSortList(ListNode head) {
-        ListNode cur = head ; // 첫번째 노드를 가리키는 포인터
-        ListNode dummy = new ListNode(0); //기존 연결리스트에서 새로운 연결을 취해주기
-        //위한 더미노드를 만듦.
-        while(cur!=null) // cur이 마지막이 아닐동안
+        ListNode cur = head; // 첫번째 노드를 가리키는 포인터
+        ListNode dummy = new ListNode(0);
+        //기존 연결리스트에서 새로운 연결을 취해주기
+        //위한 더미노드를 만듦. -> 연결리스트으 삽입과 삭제에서 유리하려나
+        while (cur != null) // cur이 마지막이 아닐동안
         {
-            ListNode prev = dummy; // dummy 노드를 가리키는 포인터
+            ListNode prev = dummy;
+            // dummy 노드를 가리키는 포인터
+            // 연결리스트는 삽입대상 노드의 이전 노드(prev) 통해서만 삽입, 삭제가 가능하기에
+            while (prev.next != null && prev.next.val < cur.val)
+            // 삽입될 자리의 노드를 찾으려면 이전노드의 다음노드를 대상으로 검사를 해야함.
+            //해당 자리가 삽입이 될 자리의 노드. prev.next 가 cur의 후보가 됨.
+            {
+                prev = prev.next; // prev의 포인터를 옮겨주며 자리를 찾아감.
+            }
+            cur.next = prev.next ; //새로운 연결 먼저
+            prev.next = cur; //기존 연결 수정
         }
+        return dummy.next;
     }
 
 }
