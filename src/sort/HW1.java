@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class HW1 {
     public static void main(String[] args) {
         Solution1 S = new Solution1();
-        int[] numbers = {5, 0, 2, 7};
+        int[] numbers = {2,1,3,4,1};
         System.out.println("입력 = " + Arrays.toString(numbers));
         System.out.println("출력 = " + Arrays.toString(S.solution(numbers)));
     }
@@ -36,6 +36,21 @@ class Solution1 {
             arr[j + 1] = key;
         }
 
-        return arr;
+        int uniqueCount = 0;
+        for (int i = 0; i < count; i++) {
+            if (i == 0 || arr[i] != arr[i - 1]) {
+                uniqueCount++;
+            }
+        }
+
+        int[] result = new int[uniqueCount];
+        int idx = 0;
+        for (int i = 0; i < count; i++) {
+            if (i == 0 || arr[i] != arr[i - 1]) {
+                result[idx++] = arr[i];
+            }
+        }
+
+        return result;
     }
 }
