@@ -32,16 +32,36 @@ public class SequentialSearchST<K, V> {
     //push 메소드 구현
     //같은 key 삽입 시 -> 값만 바꿔주기
     //새로운 key 삽입 시 -> 기존 first 위치에 삽입 후 포인터 변경
-    public void push(K key,V val) {
+    public void push(K key, V val) {
         for (Node<K, V> x = first; x != null; x = x.next) {
-            if(key.equals(x.key)) {
+            if (key.equals(x.key)) {
                 x.val = val;
-                return ; // 반환값이 void 더라도 함수 종료 필요시 return 해줄수있음.
+                return; // 반환값이 void 더라도 함수 종료 필요시 return 해줄수있음.
             }
         }
         //새로운 key 삽입 시 -> first 를 새로 생성, 기존 first 의 포인터에 삽입하여 first의 위치를 바꾸어줌.
-        first = new Node <K,V> (key,val,first);
+        first = new Node<K, V>(key, val, first);
         N++; //노드 개수 증가 표시
+    }
+
+    //delete 메소드 구현
+    //이전 노드를 기준으로 구현
+    //first 노드는 이전 노드가 없으므로 따로 빼서 구현
+    public void delete(K key) {
+        //first 삭제
+        if (key.equals(first.key)) {
+            first = first.next;
+            N--;
+            return;
+        }
+        //이외 노드 삭제 (삭제할 노드는 항상 이전 노드의 다음노드 -> x.next)
+        for (Node<K, V> x = first; x.next != null; x = x.next) {
+            if (key.equals(x.next.key)) {
+                x.next = x.next.next;
+                N--;
+                return;
+            }
+        }
     }
 
 }
