@@ -78,6 +78,34 @@ public class SequentialSearchST<K, V> {
         return keyList;
     }
 
+
+    public class Main {
+        public static void main(String[] args) {
+
+            // 객체 생성
+            SequentialSearchST<String, Integer> st = new SequentialSearchST<>();
+
+            // 데이터 삽입
+            st.push("apple", 10);
+            st.push("banana", 20);
+
+            // 값 가져오기
+            System.out.println("apple: " + st.get("apple"));
+
+            // 전체 key 출력
+            for (String key : st.keys()) {
+                System.out.println(key);
+            }
+
+            // 삭제
+            st.delete("banana");
+
+            System.out.println("After delete:");
+            for (String key : st.keys()) {
+                System.out.println(key);
+            }
+        }
+    }
 }
 
 
