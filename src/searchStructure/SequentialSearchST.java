@@ -36,11 +36,14 @@ public class SequentialSearchST<K, V> {
         for (Node<K, V> x = first; x != null; x = x.next) {
             if(key.equals(x.key)) {
                 x.val = val;
+                return ; // 반환값이 void 더라도 함수 종료 필요시 return 해줄수있음.
             }
         }
         //새로운 key 삽입 시 -> first 를 새로 생성, 기존 first 의 포인터에 삽입하여 first의 위치를 바꾸어줌.
         first = new Node <K,V> (key,val,first);
+        N++; //노드 개수 증가 표시
     }
+
 }
 
 
