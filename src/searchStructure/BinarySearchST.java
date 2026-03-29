@@ -112,7 +112,8 @@ public class BinarySearchST<K extends Comparable<K>, V>
         //해당 위치에 삽입
         keys[i] = key;
         vals[i] = val;
+
+        //N 증가로 값이 들어갔음을 표시
+        N++;
     }
-
-
 }
