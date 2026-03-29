@@ -79,4 +79,21 @@ public class BinarySearchST<K extends Comparable<K>, V>
         return low;
         //찾으려는 값이 없다면 새로 삽입해야할 단계임으로 low 위치에 삽입할 수 있도록 low 반환
     }
+
+    //찾으려는 key가 있으면 해당 val 반환 , 없으면 null 반환하는 get
+    public V get(K key)
+    {
+       int i = search(key); // 있으면 -> mid , 없으면 low
+       if(i<N && keys[i].compareTo(key)==0)
+           // i 가 배열 범위 내 && search로 반환된 i가 keys 배열에 존재하는지 확인
+       {
+           return vals[i]; //맞으면 값 리턴
+       }
+       else
+       {
+           return null;
+       }
+    }
+
+
 }
