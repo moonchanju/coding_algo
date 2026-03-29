@@ -1,5 +1,7 @@
 package searchStructure;
 
+import java.util.ArrayList;
+
 public class BinarySearchST<K extends Comparable<K>, V>
         //제네릭으로 구현 -> 객체 생성시 타입 구체화 필요
 {
@@ -90,6 +92,7 @@ public class BinarySearchST<K extends Comparable<K>, V>
         }
     }
 
+    //찾으려는 key 존재시 -> 값만 바꾸기 , 없을 시 배열 크기 체크 후 삽입 로직 실행하는 put
     public void put(K key, V val) {
         int i = search(key);
         //key가 존재할 경우 값만 바꾸기
@@ -115,5 +118,40 @@ public class BinarySearchST<K extends Comparable<K>, V>
 
         //N 증가로 값이 들어갔음을 표시
         N++;
+    }
+
+    //삭제할 key 메소드가 없을 경우 return , 있을 경우 i보다 큰 값들을 한칸씩 앞으로 당기는 delete 메소드
+    public void delete(K key)
+    {
+        int i = search(key);
+
+        //삭제 할 key가 없을 경우
+        if(i==N||keys[i].compareTo(key)!=0)
+        //배열의 범위를 넘어서거나, keys 에 존재하지 않는다면
+        {
+            return ;
+        }
+        for(int j=N-1;j>i;j--)
+        {
+            keys[j-1]=keys[j];
+            vals[j-1]=vals[j];
+        }
+        N--;
+        //가비지 컬렉션을 위함. 메모리 낭비 줄이려고
+        keys[N] = null;
+        vals[N] = null;
+
+        if(N>INIT_CAPACITY&&N==keys.length/4)
+        {
+            resize(keys.length/2);
+        }
+    }
+
+    //key 메소드 구현
+    public Iterable<K> keys() { // 연결 리스트의 경우와 거의 동일
+        ArrayList<K> keyList = new ArrayList<K>(N);
+        for (int i = 0; i < N; i++)
+            keyList.add(keys[i]);
+        return keyList;
     }
 }
