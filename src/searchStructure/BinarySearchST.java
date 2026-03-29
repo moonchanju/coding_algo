@@ -154,4 +154,40 @@ public class BinarySearchST<K extends Comparable<K>, V>
             keyList.add(keys[i]);
         return keyList;
     }
+
+    public static void main(String[] args) {
+        // Integer key, String value 예제
+        BinarySearchST<Integer, String> st = new BinarySearchST<>();
+
+        // 값 삽입
+        st.put(10, "A");
+        st.put(20, "B");
+        st.put(30, "C");
+
+        System.out.println("삽입 후 상태:");
+        for (Integer key : st.keys()) {
+            System.out.println(key + " -> " + st.get(key));
+        }
+
+        // 값 갱신
+        st.put(20, "B2");
+        System.out.println("\n20 값 갱신 후:");
+        for (Integer key : st.keys()) {
+            System.out.println(key + " -> " + st.get(key));
+        }
+
+        // 값 삭제
+        st.delete(10);
+        System.out.println("\n10 삭제 후:");
+        for (Integer key : st.keys()) {
+            System.out.println(key + " -> " + st.get(key));
+        }
+
+        // 존재하지 않는 값 get
+        System.out.println("\n50 값 조회 (존재하지 않음): " + st.get(50));
+
+        // isEmpty, size 체크
+        System.out.println("\n현재 size: " + st.size());
+        System.out.println("isEmpty? " + st.isEmpty());
+    }
 }
