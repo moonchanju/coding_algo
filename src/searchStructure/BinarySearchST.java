@@ -68,11 +68,9 @@ public class BinarySearchST<K extends Comparable<K>, V>
 
             if (cmp < 0) {
                 high = mid - 1;
-            }
-            else if (cmp > 0) {
+            } else if (cmp > 0) {
                 low = mid + 1;
-            }
-            else {
+            } else {
                 return mid;
             }
         }
@@ -81,18 +79,33 @@ public class BinarySearchST<K extends Comparable<K>, V>
     }
 
     //찾으려는 key가 있으면 해당 val 반환 , 없으면 null 반환하는 get
-    public V get(K key)
-    {
-       int i = search(key); // 있으면 -> mid , 없으면 low
-       if(i<N && keys[i].compareTo(key)==0)
-           // i 가 배열 범위 내 && search로 반환된 i가 keys 배열에 존재하는지 확인
-       {
-           return vals[i]; //맞으면 값 리턴
-       }
-       else
-       {
-           return null;
-       }
+    public V get(K key) {
+        int i = search(key); // 있으면 -> mid , 없으면 low
+        if (i < N && keys[i].compareTo(key) == 0)
+        // i 가 배열 범위 내 && search로 반환된 i가 keys 배열에 존재하는지 확인
+        {
+            return vals[i]; //맞으면 값 리턴
+        } else {
+            return null;
+        }
+    }
+
+    public void put(K key, V val) {
+        int i = search(key);
+        //key가 존재할 경우 값만 바꾸기
+        if (i < N && keys[i].compareTo(key) == 0) {
+            vals[i] = val;
+            return;
+        }
+
+        //key 미존재시 i 위치에 삽입해야 함으로 -> 기존 N 배열의 i 위치부터 N 까지 모든 값을 뒤로 땡기기.
+        for (int j = N; j > i; j--) {
+            keys[j] = keys[j-1];
+            vals[j] = vals[j-1];
+        }
+        //해당 위치에 삽입
+        keys[i] = key;
+        vals[i] = val;
     }
 
 
