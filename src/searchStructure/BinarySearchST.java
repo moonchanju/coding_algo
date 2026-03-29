@@ -98,6 +98,12 @@ public class BinarySearchST<K extends Comparable<K>, V>
             return;
         }
 
+        //key 미존재시 기존 keys 배열의 길이가 꽉 찬 경우 resize 로 배열 길이 늘리기.
+        if(N==keys.length)
+        {
+            resize(2*keys.length);
+        }
+
         //key 미존재시 i 위치에 삽입해야 함으로 -> 기존 N 배열의 i 위치부터 N 까지 모든 값을 뒤로 땡기기.
         for (int j = N; j > i; j--) {
             keys[j] = keys[j-1];
