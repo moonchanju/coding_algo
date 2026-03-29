@@ -56,6 +56,7 @@ public class BinarySearchST<K extends Comparable<K>, V>
         vals = tempv;
     }
 
+    //찾으려는 key가 있는지 검사하고 있으면 반환 , 없으면 새로 삽입할 위치를 알려주는 search
     private int search(K key) {
         int low = 0;
         int high = N - 1;
