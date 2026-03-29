@@ -13,7 +13,7 @@ public class BinarySearchST<K extends Comparable<K>, V>
     public BinarySearchST() {
         keys = (K[]) new Comparable[INIT_CAPACITY];
         //K[]로 캐스팅하여 기존 K의 형식 미정의 문제를 우회
-        //그러려면 comparable 배열을 사용해 K와 같은 형식의 인자만 담기.
+        //그러려면 comparable 배열을 사용해 K와 같은 형식의 인자만 담기
         vals = (V[]) new Object[INIT_CAPACITY];
         //object-> 모든 타입의 객체를 담을수 있는 일반적인 타입
     }
@@ -24,6 +24,7 @@ public class BinarySearchST<K extends Comparable<K>, V>
         vals = (V[]) new Object[capacity];
     }
 
+    //기본 메서드 구현
     public boolean contains(K key) {
         return get(key) != null;
     }
@@ -34,5 +35,25 @@ public class BinarySearchST<K extends Comparable<K>, V>
 
     public int size() {
         return N;
+    }
+
+    //배열 크기를 동적으로 변경하는 resize
+    //capacity 만큼의 크기를 만들고, 기존 배열을 덮어 씌우는 기능
+    private void resize(int capacity)
+    {
+        //배열 크기 동적 할당
+        K[] tempk = (K[]) new Comparable[capacity];
+        V[] tempv = (V[]) new Object[capacity];
+
+        for(int i=0;i<N;i++)
+        //실제로 저장된 key-val 쌍의 개수를 의미하는 N
+        {
+            tempk[i] = keys[i];
+            tempv[i] = vals[i];
+        }
+
+        //기존 keys,vals 포인터 수정
+        keys = tempk;
+        vals = tempv;
     }
 }
