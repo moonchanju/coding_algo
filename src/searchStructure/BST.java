@@ -87,26 +87,77 @@ public class BST<K extends Comparable<K>, V> {
         }
     }
 
-    public int size() { return (root != null) ? root.N : 0; }
+    public int size() {
+        return (root != null) ? root.N : 0;
+    }
 
     //keys
     //키의 정렬된 리스트를 반환 -> 중위 순회를 사용하면서 keyList에 담음.
     public Iterable<K> keys() {
-        if(root==null) return null;
-        ArrayList<K> keyList = new ArrayList<K> (size());
+        if (root == null) return null;
+        ArrayList<K> keyList = new ArrayList<K>(size());
         //arraylist 로 순회결과를 동적으로 담음.
-        inorder(root,keyList);
+        inorder(root, keyList);
         return keyList;
     }
-    private void inorder(Node<K,V>x,ArrayList<K> keyList)
-            //매개변수로 순회 기점이 되는 x, 순회 결과를 도중에 담기위해 keyList를 넘겨둠
+
+    private void inorder(Node<K, V> x, ArrayList<K> keyList)
+    //매개변수로 순회 기점이 되는 x, 순회 결과를 도중에 담기위해 keyList를 넘겨둠
     {
-        inorder(x.left,keyList);
+        inorder(x.left, keyList);
         //좌측 순회
         keyList.add(x.key);
         //키를 담고
-        inorder(x.right,keyList);
+        inorder(x.right, keyList);
         //우측순회
         //이거 정형화된 틀이니 익혀두도록
     }
+
+    //delete
+    //삭제의 경우의 수
+    //삭제할 노드가 루트인 경우 -> 루트이며 리프 , 루트이며 자식1개 , 루트이며 자식 2개
+    //삭제할 노드의 자식이 있는 경우 -> 자식 2개, 자식 1개 , 자식 없음
+    public void delete(K key) {
+        if (root == null) return;
+        Node<K, V> x, y, p;
+        x = treeSearch(key); // 삭제할 노드 x
+        if (!key.equals(x.key)) return; // 해당 노드가 존재하지 않을 경우 return
+
+        //but ! 해당 코드는 루트인 부분과 자식 2개인 부분을 한대 묶어 if 로 처리
+        if (x == root || isTwoNode(x))
+        //root 이거나 자식이 두개인 경우
+        {
+            if (isLeaf(x)) {
+                root = null;
+                return;
+            } // 루트이며 리프 -> 루트 삭제후 종료
+            else if (!isTwoNode(x)) //루트이며 자식이 하나
+            {
+                root = (x.right == null) ? x.left : x.right;
+                //x의 자식을 루트로 올리고
+                root.parent = null;
+                //해당 x의 부모를 없애자
+                return;
+            }
+
+        }
+    }
+
+    public boolean contains(K key) {
+        return get(key) != null;
+    }
+
+    public boolean isEmpty() {
+        return root == null;
+    }
+
+    protected boolean isLeaf(Node<K, V> x) {
+        return x.left == null && x.right == null;
+    }
+
+    protected boolean isTwoNode(Node<K, V> x) {
+        return x.left != null && x.right != null;
+    }
+
+
 }
