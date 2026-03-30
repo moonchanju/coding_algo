@@ -1,6 +1,8 @@
 package searchStructure;
 
 
+import java.util.ArrayList;
+
 public class BST<K extends Comparable<K>, V> {
     protected Node<K, V> root;
 
@@ -83,5 +85,28 @@ public class BST<K extends Comparable<K>, V> {
         for (; x != null; x = x.parent) {
             x.N += value;
         }
+    }
+
+    public int size() { return (root != null) ? root.N : 0; }
+
+    //keys
+    //키의 정렬된 리스트를 반환 -> 중위 순회를 사용하면서 keyList에 담음.
+    public Iterable<K> keys() {
+        if(root==null) return null;
+        ArrayList<K> keyList = new ArrayList<K> (size());
+        //arraylist 로 순회결과를 동적으로 담음.
+        inorder(root,keyList);
+        return keyList;
+    }
+    private void inorder(Node<K,V>x,ArrayList<K> keyList)
+            //매개변수로 순회 기점이 되는 x, 순회 결과를 도중에 담기위해 keyList를 넘겨둠
+    {
+        inorder(x.left,keyList);
+        //좌측 순회
+        keyList.add(x.key);
+        //키를 담고
+        inorder(x.right,keyList);
+        //우측순회
+        //이거 정형화된 틀이니 익혀두도록
     }
 }
