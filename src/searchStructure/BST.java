@@ -59,21 +59,29 @@ public class BST<K extends Comparable<K>, V> {
         // key 찾은 경우 값만 바꾸기.
         {
             x.val = val;
-        }
-        else
-        {
-            Node<K,V> newNode = new Node<K,V>(key, val,null); //삽입할 노드 생성
-            if(cmp>0) //x가 더 크다 -> 새로 삽입한 노드가 좌측에 오도록 하자.
+        } else {
+            Node<K, V> newNode = new Node<K, V>(key, val, null); //삽입할 노드 생성
+            if (cmp > 0) //x가 더 크다 -> 새로 삽입한 노드가 좌측에 오도록 하자.
             {
                 x.left = newNode;
-            }
-            else
-            {
+            } else {
                 x.right = newNode;
             }
             newNode.parent = x;
         }
     }
 
+    protected void rebalanceInsert(Node<K, V> x) {
+        resetSize(x.parent, 1); // root까지 조상 노드들의 size를 1 증가
+    }
 
+    protected void rebalanceDelete(Node<K, V> p, Node<K, V> deleted) {
+        resetSize(p, -1);
+    }// root까지 조상 노드들의 size를 1 감소
+
+    private void resetSize(Node<K, V> x, int value) {
+        for (; x != null; x = x.parent) {
+            x.N += value;
+        }
+    }
 }
