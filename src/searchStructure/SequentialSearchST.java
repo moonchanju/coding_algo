@@ -3,15 +3,27 @@ package searchStructure;
 import java.util.ArrayList;
 
 class Node<K, V> {
-
-    K key; // 키
-    V val; // 값
-    Node<K, V> next; // 다음 노드를 가리키는 포인터
+    public Node<K, V> next;
+    public Node<K, V> left, right;
+    K key;
+    V val;
+    int N; // 자손 노드 + 1 (ordered 연산)
+    int aux; // AVL 트리나 RB 트리에 사용
+    Node<K, V> parent; // AVL or RB
 
     public Node(K key, V val, Node<K, V> next) {
         this.key = key;
         this.val = val;
         this.next = next;
+        this.N = 1;
+    }
+
+    public int getAux() {
+        return aux;
+    }
+
+    public void setAux(int value) {
+        aux = value;
     }
 }
 
@@ -68,9 +80,7 @@ public class SequentialSearchST<K, V> {
 
     //keyList 구현
     //Iterable -> 객체를 반복해서 사용 할 경우 사용
-    public Iterable<K> keys()
-
-    {
+    public Iterable<K> keys() {
         ArrayList<K> keyList = new ArrayList<K>(N);
         for (Node<K, V> x = first; x != null; x = x.next) {
             keyList.add(x.key);
@@ -107,5 +117,3 @@ public class SequentialSearchST<K, V> {
         }
     }
 }
-
-

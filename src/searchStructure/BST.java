@@ -1,17 +1,33 @@
 package searchStructure;
 
-class Node<K,V> {
-    int N; // 자손 노드 + 1 (ordered 연산)
-    int aux: // AVL 트리나 RB 트리에 사용
-    Node<K,V> parent; // AVL or RB
-    public Node(K key, V val) {
-        this.key = key; this.value = val;
-        this.N = 1;
-    }
-    public int getAux(){ return aux; }
-    public void setAux(int value) { aux = value; }
-}
-}
 
-public class BST {
+public class BST<K extends Comparable<K>, V> {
+    protected Node<K, V> root;
+
+    //키를 입력 받아 -> 그 키를 가지는 노드 또는 노드를 가지지 않으면 순회의 마지막 노드를 반환하자 (삽입을 위해서)
+    protected Node<K, V> treeSearch(K key) {
+        Node<K, V> x = root;
+
+        while (true) {
+            int cmp = key.compareTo(x.key);
+            if (cmp == 0) return x; //바로 찾음 -> x 반환
+            else if (cmp < 0) {//key가 더 작음 -> x 가 더 작아진 범위에서 탐색 진행
+                if (x.left == null)
+                //x가 리프노드 였다면 -> 키가 없으므로 추후 삽입을 위해 마지막 노드를 반환
+                {
+                    return x;
+                } else {
+                    x = x.left;
+                }
+
+            } else //cmp>0
+            {
+                if (x.right == null) {
+                    return x;
+                } else {
+                    x = x.right;
+                }
+            }
+        }
+    }
 }
