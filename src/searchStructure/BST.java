@@ -156,21 +156,34 @@ public class BST<K extends Comparable<K>, V> {
                 relink(p, y.right, y == p.left); //
                 rebalance(p.y);
             }
-        }
-        else // 자식이 1개 또는 0개인 경우 처리
+        } else // 자식이 1개 또는 0개인 경우 처리
         //루트가 아님 , 즉 삭제할 시 본인의 자식이 있다면 부모와 연결 시켜주는 작업이 필요.]
         {
             //relink 사용 방식 -> 삭제할 노드의 부모 변수 설정, 삭제할 자식 변수 설정, 왼쪽 자식인가에 대한 매개변수 설정
             //자식이 없는 경우는 x.left , x.right 가 null로 처리 되므로 -> 자연스레 p와 null이 이어지므로 삭제 처리
             p = x.parent;
             if (x.right == null) {
-                relink(p,x.left,p==x.left);
+                relink(p, x.left, p == x.left);
+            } else if (x.left == null) {
+                relink(p, x.right, p == x.right);
             }
-            else if(x.left==null)
-            {
-                relink(p,x.right,p==x.right);
-            }
-            rebalanceDelete(p,x);
+            rebalanceDelete(p, x);
+        }
+    }
+
+    protected void relink(Node<K, V> parent, Node<K, V> child, boolean makeleft) {
+        //연결 설정 시 자식과 부모 입장에서의 연결 설정 총 2개가 필요함.
+
+        //자식의 연결 설정
+        if (child != null) {
+            child.parent = parent; //
+        }
+
+        //부모의 연결 설정
+        if (makeleft) {
+            parent.left = child;
+        } else {
+            parent.right = child;
         }
     }
 
