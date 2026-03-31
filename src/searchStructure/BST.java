@@ -87,7 +87,7 @@ public class BST<K extends Comparable<K>, V> {
         }
     }
 
-    public int size() {
+    public int size(Node<K, V> left) {
         return (root != null) ? root.N : 0;
     }
 
@@ -95,7 +95,7 @@ public class BST<K extends Comparable<K>, V> {
     //키의 정렬된 리스트를 반환 -> 중위 순회를 사용하면서 keyList에 담음.
     public Iterable<K> keys() {
         if (root == null) return null;
-        ArrayList<K> keyList = new ArrayList<K>(size());
+        ArrayList<K> keyList = new ArrayList<K>(size(x.left));
         //arraylist 로 순회결과를 동적으로 담음.
         inorder(root, keyList);
         return keyList;
@@ -202,8 +202,7 @@ public class BST<K extends Comparable<K>, V> {
     public K min() {
         if (root == null) return null;
         Node<K, V> x = root;
-        while (x.left != null)
-        {
+        while (x.left != null) {
             x = x.left;
         }
         return x.key;
@@ -232,6 +231,28 @@ public class BST<K extends Comparable<K>, V> {
 
     protected boolean isTwoNode(Node<K, V> x) {
         return x.left != null && x.right != null;
+    }
+
+    //rank
+    //key 보다 작은 키의 수를 return
+    public int rank(K key) {
+        if (root == null || key == null) return 0;
+        Node<K, V> x = root; //시작 시점
+        int num = 0;
+
+        while (x != null) {
+            int cmp = key.compareTo(x.key);
+            //key가 더 작은 경우
+            if (cmp < 0) {
+                x = x.left;
+            } else if (cmp > 0) {
+                num += 1 + size(x.left);
+                x = x.right;
+            } else {
+                num+=size(x.left); break;
+            }
+        }
+        return num;
     }
 
 
