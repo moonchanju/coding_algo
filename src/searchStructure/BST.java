@@ -187,6 +187,14 @@ public class BST<K extends Comparable<K>, V> {
         }
     }
 
+    //최소 ket 값을 구할때에는 항상 왼쪽으로
+    protected Node<K, V> min(Node<K, V> x) {
+        while (x.left != null) {
+            x = x.left;
+        }
+        return x;
+    }
+
     public boolean contains(K key) {
         return get(key) != null;
     }
