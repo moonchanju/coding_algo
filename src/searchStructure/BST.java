@@ -127,18 +127,39 @@ public class BST<K extends Comparable<K>, V> {
         if (x == root || isTwoNode(x))
         //root 이거나 자식이 두개인 경우
         {
+            // 루트이며 리프 -> 루트 삭제후 종료
             if (isLeaf(x)) {
                 root = null;
                 return;
-            } // 루트이며 리프 -> 루트 삭제후 종료
-            else if (!isTwoNode(x)) //루트이며 자식이 하나
-            {
-                root = (x.right == null) ? x.left : x.right;
-                //x의 자식을 루트로 올리고
+            }
+
+            //루트이며 자식이 하나 -> 자식을 루트로 올리고 해당 자식의 부모 포인터를 null
+            else if (!isTwoNode(x)) {
+                root = (x.left == null) ? x.right : x.left; //삼항 연산자로 자식의 위치를 찾아 root 로 올리기
                 root.parent = null;
-                //해당 x의 부모를 없애자
                 return;
             }
+
+            // 자식이 둘 ( 루트이며 자식이 둘인 경우도 포함이 됨)
+            // successor 을 찾아서 root의 자리에 올리는 역할
+            else {
+
+                // min -> 해당 서브트리의 가장 작은 Key 값 return
+                //successor = y
+                y = min(x.right);
+
+                //루트 자리에 succesor 값 이식
+                x.key = y.key;
+                x.val = y.val;
+
+                //successor의 부모인 p -> successor의 자식과 이어주는 역할을 함
+                p= y.parent;
+                //relink 는 부모와 자식을 연결해주는 작업을 함, parent , child, makeleft(어느쪽 자식인가?) 의 인자를 가져감.
+                //y.right를 자식으로 넣은 이유 -> successor은 우측 자식만 있을수있음.
+                relink(p,y.right,y==p.left); //
+                rebalance(p.y);
+            }
+
 
         }
     }
