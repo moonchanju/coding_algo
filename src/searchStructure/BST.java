@@ -171,8 +171,10 @@ public class BST<K extends Comparable<K>, V> {
         }
     }
 
+    //relink
+    //삭제 노드 제거 후 연결을 도와주는 역할
     protected void relink(Node<K, V> parent, Node<K, V> child, boolean makeleft) {
-        //연결 설정 시 자식과 부모 입장에서의 연결 설정 총 2개가 필요함.
+        //연결 설정 시 자식과 부모 입장 에서의 연결 설정 총 2개가 필요함.
 
         //자식의 연결 설정
         if (child != null) {
@@ -187,12 +189,33 @@ public class BST<K extends Comparable<K>, V> {
         }
     }
 
-    //최소 ket 값을 구할때에는 항상 왼쪽으로
+    //min
+    //successor 발견용도
+    //최소 key 값을 구할 때 에는 항상 왼쪽으로
     protected Node<K, V> min(Node<K, V> x) {
         while (x.left != null) {
             x = x.left;
         }
         return x;
+    }
+
+    public K min() {
+        if (root == null) return null;
+        Node<K, V> x = root;
+        while (x.left != null)
+        {
+            x = x.left;
+        }
+        return x.key;
+    }
+
+    public K max() {
+        if (root == null) return null;
+        Node<K, V> x = root;
+        while (x.right != null) {
+            x = x.right;
+        }
+        return x.key;
     }
 
     public boolean contains(K key) {
