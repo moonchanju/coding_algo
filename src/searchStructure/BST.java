@@ -249,10 +249,33 @@ public class BST<K extends Comparable<K>, V> {
                 num += 1 + size(x.left);
                 x = x.right;
             } else {
-                num+=size(x.left); break;
+                num += size(x.left);
+                break;
             }
         }
         return num;
+    }
+
+    //select
+    //rank 등수에 해당하는 키를 반환
+    public K select(int rank) {
+        Node<K, V> x = root;
+        while (true) {
+            int t = size(x.left);
+            if(rank<t)
+            {
+                x=x.left;
+            }
+            else if(rank>t)
+            {
+                rank=rank-t-1;
+                x=x.right;
+            }
+            else
+            {
+                return x.key;
+            }
+        }
     }
 
 
